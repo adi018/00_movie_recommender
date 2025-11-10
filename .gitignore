@@ -1,0 +1,9 @@
+.venv_**
+.vscode/**
+**__pycache__/
+*.pyc
+data/*
+**.joblib
+**.npy
+**.json
+.DS_Store
