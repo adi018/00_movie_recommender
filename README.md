@@ -1,6 +1,79 @@
-# 📚 LLM-Based Book Recommender System
+# 📚 LLM Book Recommender System - Complete Guide
 
-A sophisticated book recommendation engine powered by large language models and semantic embeddings. The system uses sentence transformers to understand book descriptions and user queries, finding the best matching books based on semantic similarity.
+A production-ready **AI-powered boo6. **Run the Streamlit app**
+   ```bash
+   streamlit run app.py
+   ```
+   
+   The app will open at `http://localhost:8501`
+
+7. **Run the FastAPI server** (Optional, in another terminal)
+   ```bash
+   python api.py
+   ```
+   
+   API will be available at `http://localhost:8000`
+   Documentation at `http://localhost:8000/docs`
+
+## 📡 FastAPI REST API
+
+The system now includes a professional FastAPI server for programmatic access!
+
+### Quick API Examples
+
+**Get Recommendations:**
+```bash
+curl -X POST http://localhost:8000/recommend \
+  -H "Content-Type: application/json" \
+  -d '{"query": "Science fiction with space exploration", "k": 5}'
+```
+
+**Health Check:**
+```bash
+curl http://localhost:8000/health
+```
+
+**Batch Recommendations:**
+```bash
+curl -X POST "http://localhost:8000/batch-recommend?k=3" \
+  -H "Content-Type: application/json" \
+  -d '["Fantasy with dragons", "Mystery thriller"]'
+```
+
+### API Endpoints
+
+- `GET /` - API info
+- `GET /health` - Health check
+- `POST /recommend` - Single recommendation
+- `POST /batch-recommend` - Multiple recommendations
+- `GET /model-info` - Model specifications
+- `GET /docs` - Swagger UI (interactive testing)
+
+**See API_DOCUMENTATION.md for complete API reference**
+
+## 🐳 Docker Deployment
+
+### Using Docker Compose (Recommended) - Both Streamlit & API
+
+1. **Build and run**
+   ```bash
+   docker-compose up --build
+   ```
+
+2. **Access services**
+   - Streamlit UI: http://localhost:8501
+   - FastAPI: http://localhost:8000
+   - API Docs: http://localhost:8000/docsn system** using semantic embeddings and transformer models. Access your recommender through:
+- 🎨 **Streamlit UI** - Beautiful interactive interface
+- 📡 **FastAPI REST API** - Programmatic access for developers
+- 🐳 **Docker** - Container deployment
+
+**Tech Stack:**
+- Sentence Transformers (all-MiniLM-L6-v2)
+- 6,538 books with 384-dimensional embeddings
+- Cosine similarity ranking
+- Streamlit + FastAPI
+- Docker containerization
 
 ## 🎯 Features
 

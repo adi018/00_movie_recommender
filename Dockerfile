@@ -5,6 +5,7 @@ WORKDIR /app
 # Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements
@@ -19,11 +20,9 @@ COPY . .
 # Create models directory
 RUN mkdir -p models
 
-# Expose Streamlit port
-EXPOSE 8501
+# Expose ports for both Streamlit and FastAPI
+EXPOSE 8501 8000
 
-# Healthcheck
-HEALTHCHECK CMD curl --fail http://localhost:8501/_stcore/health
-
-# Run Streamlit app
+# Default to Streamlit (can be overridden in docker-compose)
 CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+

@@ -1,22 +1,47 @@
 version: '3.8'
 
 services:
-  book-recommender:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: book-recommender
+  streamlit:
+    build: .
+    container_name: book-recommender-streamlit
     ports:
       - "8501:8501"
     volumes:
-      - ./data:/app/data
-      - ./models:/app/models
+      - ./data:/app/data:ro
+      - ./models:/app/models:ro
     environment:
       - PYTHONUNBUFFERED=1
-    restart: unless-stopped
+      - STREAMLIT_SERVER_HEADLESS=true
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8501/_stcore/health"]
-      interval: 30s
-      timeout: 10s
+      interval: 10s
+      timeout: 5s
       retries: 3
-      start_period: 40s
+    restart: unless-stopped
+    networks:
+      - recommender-network
+
+  api:
+    build: .
+    container_name: book-recommender-api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data:ro
+      - ./models:/app/models:ro
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: python api.py
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
+    networks:
+      - recommender-network
+
+networks:
+  recommender-network:
+    driver: bridge
+
